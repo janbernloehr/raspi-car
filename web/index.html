@@ -12,6 +12,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="bower_components/ngtouch/build/ngTouch.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-slider/0.1.27/slider.min.js"></script>
     <script type="text/javascript">
 
         var app = angular.module('carApp', ["ngTouch"]);
@@ -25,8 +26,10 @@
             self.error = "";
             self.mode = "none";
             self.isError = false;
-
             self.lightsLight = false;
+
+            self.thrust = 0;
+            self.vector = 0;
 
             self.baseurl = "http://" + $location.host() + ":8087/car/";
 	    self.videourl = "http://" + $location.host() + ":8071/?action=stream";
@@ -204,6 +207,14 @@
         <button ng-click="carCtl.switchLights()" class="btn btn-primary btn-block">
             switch lights
         </button>
+    </div>
+
+    <div>
+        <slider ng-model="carCtl.thrust" min="0" step="1" max="100" value="0"></slider>
+        <slider ng-model="carCtl.vector" min="-1" step="0.1" max="1" value="0"></slider>
+
+        {{carCtl.thrust}}
+        {{carCtl.vector}}
     </div>
 
     <div>
