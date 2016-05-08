@@ -268,17 +268,15 @@ def move_backward():
 
 
 def move(thrust, vector):
-
-
     if (vector == 0):
         thrustl = thrust
         thrustr = thrust
     elif (vector < 0):
         thrustr = thrust
-        thrustl = thrust * (1+vector)
+        thrustl = int(float(thrust) * (1.0+vector))
     elif (vector > 0):
         thrustl = thrust
-        thrustr = thrust * (1-vector)
+        thrustr = int(float(thrust) * (1.0-vector))
 
     dc_motor_set(1, thrustr)
     dc_motor_set(2, thrustr)
