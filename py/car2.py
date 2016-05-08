@@ -32,8 +32,8 @@ MOTOR4_B = 6
 MOTOR3_A = 5
 MOTOR3_B = 7
 
-FORWARD = 1
-BACKWARD = 2
+FORWARD = 2
+BACKWARD = 1
 BRAKE = 3
 RELEASE = 4
 
@@ -245,17 +245,17 @@ def test_motors():
 
 
 def turn_left():
-    dc_motor_set(1, 10)
-    dc_motor_set(2, 10)
-    dc_motor_set(3, 100)
-    dc_motor_set(4, 100)
-
-
-def turn_right():
     dc_motor_set(1, 100)
     dc_motor_set(2, 100)
     dc_motor_set(3, 10)
     dc_motor_set(4, 10)
+
+
+def turn_right():
+    dc_motor_set(1, 10)
+    dc_motor_set(2, 10)
+    dc_motor_set(3, 100)
+    dc_motor_set(4, 100)
 
 
 def move_forward():
@@ -330,6 +330,18 @@ class CarMoveBackward:
         })
         resp.status = falcon.HTTP_200
 
+class CarMove:
+    def on_get(self, thrust, vector, req, resp):
+        move_backward()
+        origin = req.get_header('Origin')
+        resp.set_header('Access-Control-Allow-Origin', origin)
+        resp.body = json.dumps({
+            'status': 'move',
+            'thrust': thrust,
+            'vector': vector
+        })
+        resp.status = falcon.HTTP_200
+
 
 class CarRelease:
     def on_get(self, req, resp):
@@ -376,6 +388,7 @@ start_this_app()
 api = falcon.API()
 
 api.add_route('/car/fw', CarMoveForward())
+api.add_route('/car/f9/{thrust}/{vector}', CarMove())
 api.add_route('/car/tl', CarTurnLeft())
 api.add_route('/car/tr', CarTurnRight())
 api.add_route('/car/bw', CarMoveBackward())
