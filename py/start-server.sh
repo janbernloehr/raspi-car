@@ -1,1 +1,1 @@
-gunicorn -b "127.0.0.1:8087" car2:app
+gunicorn -b "0.0.0.0:8087" car2:app
