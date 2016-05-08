@@ -32,6 +32,7 @@
 
             self.thrust = 0;
             self.vector = 0;
+            self.out1 = 0;
 
             self.baseurl = "http://" + $location.host() + ":8087/car/";
 	    self.videourl = "http://" + $location.host() + ":8071/?action=stream";
@@ -157,6 +158,10 @@
                     self.lightsOn();
                 }
             };
+
+            self.handleSlide = function() {
+              self.out1 = self.thrust;
+            };
         });
 
     </script>
@@ -213,10 +218,11 @@
 
     <div>
         <slider ng-model="carCtl.thrust" min="0" step="1" max="100" value="0"></slider>
-        <slider ng-model="carCtl.vector" min="-1" step="0.1" max="1" value="0"></slider>
+        <slider ng-model="carCtl.vector" min="-1" step="0.1" max="1" value="0" on-slide="carCtl.handleSlide()"></slider>
 
         {{carCtl.thrust}}
         {{carCtl.vector}}
+        {{carCtl.out1}}
     </div>
 
     <div>
