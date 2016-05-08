@@ -1,16 +1,11 @@
-#!/usr/bin/python
-
 import json
 from time import sleep
-from wsgiref import simple_server
 
 import falcon
 import wiringpi2 as wiringpi
 
-
 def _BV(bit):
     return 1 << (bit)
-
 
 MOTORLATCH = 25
 MOTORCLK = 22  # 22
@@ -386,17 +381,13 @@ def start_this_app():
 
 start_this_app()
 
-api = falcon.API()
+app = falcon.API()
 
-api.add_route('/car/fw', CarMoveForward())
-api.add_route('/car/f9/{thrust}', CarMove())
-api.add_route('/car/tl', CarTurnLeft())
-api.add_route('/car/tr', CarTurnRight())
-api.add_route('/car/bw', CarMoveBackward())
-api.add_route('/car/st', CarRelease())
-api.add_route('/car/lightson', CarLightsOn())
-api.add_route('/car/lightsoff', CarLightsOff())
-
-if __name__ == '__main__':
-    httpd = simple_server.make_server('', 8087, api)
-    httpd.serve_forever()
+app.add_route('/car/fw', CarMoveForward())
+app.add_route('/car/f9/{thrust}', CarMove())
+app.add_route('/car/tl', CarTurnLeft())
+app.add_route('/car/tr', CarTurnRight())
+app.add_route('/car/bw', CarMoveBackward())
+app.add_route('/car/st', CarRelease())
+app.add_route('/car/lightson', CarLightsOn())
+app.add_route('/car/lightsoff', CarLightsOff())
