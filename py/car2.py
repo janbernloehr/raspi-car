@@ -326,15 +326,14 @@ class CarMoveBackward:
         resp.status = falcon.HTTP_200
 
 class CarMove:
-    def on_get(self, req, resp, thrust):
+    def on_get(self, req, resp, thrust, vector):
         move_backward()
         origin = req.get_header('Origin')
         resp.set_header('Access-Control-Allow-Origin', origin)
         resp.body = json.dumps({
             'status': 'move',
-            'thrust': thrust
-            #,
-            #'vector': req.params('vector')
+            'thrust': thrust,
+            'vector': vector
         })
         resp.status = falcon.HTTP_200
 
@@ -384,7 +383,7 @@ start_this_app()
 app = falcon.API()
 
 app.add_route('/car/fw', CarMoveForward())
-app.add_route('/car/f9/{thrust}', CarMove())
+app.add_route('/car/f9/{thrust}/{vector}', CarMove())
 app.add_route('/car/tl', CarTurnLeft())
 app.add_route('/car/tr', CarTurnRight())
 app.add_route('/car/bw', CarMoveBackward())
