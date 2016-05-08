@@ -32,8 +32,8 @@ MOTOR4_B = 6
 MOTOR3_A = 5
 MOTOR3_B = 7
 
-FORWARD = 2
-BACKWARD = 1
+FORWARD = 1
+BACKWARD = 2
 BRAKE = 3
 RELEASE = 4
 
@@ -118,13 +118,13 @@ def dc_motor_run(motornum, cmd):
         b = MOTOR4_B
 
     if cmd == FORWARD:
-        latch_state |= _BV(a)
-        latch_state &= ~_BV(b)
+        latch_state &= ~_BV(a)
+        latch_state |= _BV(b)
         latch_tx()
 
     elif cmd == BACKWARD:
-        latch_state &= ~_BV(a)
-        latch_state |= _BV(b)
+        latch_state |= _BV(a)
+        latch_state &= ~_BV(b)
         latch_tx()
 
     elif cmd == RELEASE:
@@ -331,14 +331,14 @@ class CarMoveBackward:
         resp.status = falcon.HTTP_200
 
 class CarMove:
-    def on_get(self, thrust, vector, req, resp):
+    def on_get(self, req, resp):
         move_backward()
         origin = req.get_header('Origin')
         resp.set_header('Access-Control-Allow-Origin', origin)
         resp.body = json.dumps({
             'status': 'move',
-            'thrust': thrust,
-            'vector': vector
+            'thrust': req.params('thrust'),
+            'vector': req.params('vector')
         })
         resp.status = falcon.HTTP_200
 
