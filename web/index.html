@@ -160,7 +160,14 @@
             };
 
             self.handleSlide = function() {
-              self.out1 = self.thrust;
+                $http.get(self.baseurl+"move/"+self.thrust+"/"+self.vector)
+                        .then(function successCallback(response) {
+                            self.error = response.data;
+                            self.isError = false;
+                        }, function errorCallback(response) {
+                            self.error = response;
+                            self.isError = true;
+                        });
             };
         });
 
@@ -216,10 +223,15 @@
         </button>
     </div>
 
-    <div>
-        <slider ng-model="carCtl.thrust" min="0" step="1" max="100" value="0"></slider>
-        <slider ng-model="carCtl.vector" min="-1" step="0.1" max="1" value="0" on-slide="carCtl.handleSlide()"></slider>
+    <div class="control-group" style="margin: 0 20px">
+        <slider ng-model="carCtl.thrust" min="0" step="1" max="100" value="0" on-slide="carCtl.handleSlide()"></slider>
+    </div>
 
+    <div class="control-group" style="margin: 0 20px">
+        <slider ng-model="carCtl.vector" min="-1" step="0.1" max="1" value="0" on-slide="carCtl.handleSlide()"></slider>
+    </div>
+
+    <div>
         {{carCtl.thrust}}
         {{carCtl.vector}}
         {{carCtl.out1}}
