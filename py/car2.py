@@ -346,7 +346,7 @@ class CarMoveBackward:
 
 class CarMove:
     def on_get(self, req, resp, thrust, vector):
-        move(thrust, vector)
+        move(int(thrust), float(vector))
         origin = req.get_header('Origin')
         resp.set_header('Access-Control-Allow-Origin', origin)
         resp.body = json.dumps({
