@@ -217,14 +217,14 @@
 
     </div>
 
+    <div class="control-group" style="margin: 20px 0">
+        <slider ng-model="carCtl.thrust" min="0" step="1" max="100" value="0" on-slide="carCtl.handleSlide()"></slider>
+    </div>
+
     <div class="control-group">
         <button ng-click="carCtl.switchLights()" class="btn btn-primary btn-block">
             switch lights
         </button>
-    </div>
-
-    <div class="control-group" style="margin: 20px 0">
-        <slider ng-model="carCtl.thrust" min="0" step="1" max="100" value="0" on-slide="carCtl.handleSlide()"></slider>
     </div>
 
     <div class="control-group" style="margin: 20px 0">
