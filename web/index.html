@@ -1,0 +1,224 @@
+<!doctype html>
+<html ng-app="carApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="bower_components/ngtouch/build/ngTouch.min.js"></script>
+    <script type="text/javascript">
+
+        var app = angular.module('carApp', ["ngTouch"]);
+
+        app.controller('CarController', function ($http, $scope, $location) {
+
+            var self = this;
+            self.count = 0;
+            self.local_status = "initialized";
+            self.remote_status = "none";
+            self.error = "";
+            self.mode = "none";
+            self.isError = false;
+
+            self.lightsLight = false;
+
+            self.baseurl = "http://" + $location.host() + ":8087/car/";
+	    self.videourl = "http://" + $location.host() + ":8071/?action=stream";
+
+            self.forward = function () {
+                self.local_status = "forward";
+                $http.get(self.baseurl+"fw")
+                        .then(function successCallback(response) {
+                            self.remote_status = response.data.status;
+                            self.isError = false;
+                            if (self.local_status != self.remote_status)
+                            {
+                                self.halt();
+                            }
+                        }, function errorCallback(response) {
+                            self.error = response;
+                            self.isError = true;
+                            //self.halt();
+                        });
+                self.count = self.count + 1;
+            };
+
+            self.backward = function () {
+                self.local_status = "backward";
+                $http.get(self.baseurl+"bw")
+                        .then(function successCallback(response) {
+                            self.remote_status = response.data.status;
+                            self.isError = false;
+                            if (self.local_status != self.remote_status)
+                            {
+                                self.halt();
+                            }
+                        }, function errorCallback(response) {
+                            self.error = response;
+                            self.isError = true;
+                            //self.halt();
+                        });
+                self.count = self.count + 1;
+            };
+
+            self.turnLeft = function () {
+                self.local_status = "left";
+                $http.get(self.baseurl+"tl")
+                        .then(function successCallback(response) {
+                            self.remote_status = response.data.status;
+                            self.isError = false;
+                            if (self.local_status != self.remote_status)
+                            {
+                                self.halt();
+                            }
+                        }, function errorCallback(response) {
+                            self.error = response;
+                            self.isError = true;
+                            //self.halt();
+                        });
+                self.count = self.count + 1;
+            };
+
+            self.turnRight = function () {
+                self.local_status = "right";
+                $http.get(self.baseurl+"tr")
+                        .then(function successCallback(response) {
+                            self.remote_status = response.data.status;
+                            self.isError = false;
+                            if (self.local_status != self.remote_status)
+                            {
+                                self.halt();
+                            }
+                        }, function errorCallback(response) {
+                            self.error = response;
+                            self.isError = true;
+                            //self.halt();
+                        });
+                self.count = self.count + 1;
+            };
+
+            self.halt = function () {
+                self.local_status = "stop";
+                $http.get(self.baseurl+"st")
+                        .then(function successCallback(response) {
+                            self.remote_status = response.data.status;
+                            self.isError = false;
+                        }, function errorCallback(response) {
+                            self.error = response;
+                            self.isError = true;
+                        });
+                self.count = self.count - 1;
+            };
+
+            self.lightsOn = function () {
+                $http.get(self.baseurl+"lightson")
+                        .then(function successCallback(response) {
+                            self.error = response.data;
+                            self.isError = false;
+                        }, function errorCallback(response) {
+                            self.error = response;
+                            self.isError = true;
+                        });
+            };
+
+            self.lightsOff = function () {
+                $http.get(self.baseurl+"lightsoff")
+                        .then(function successCallback(response) {
+                            self.error = response.data;
+                            self.isError = false;
+                        }, function errorCallback(response) {
+                            self.error = response;
+                            self.isError = true;
+                        });
+            };
+
+            self.testQuak = function () {
+                console.log('touchend event called');
+
+            };
+
+            self.switchLights = function () {
+                if (self.lightsLight) {
+                    self.lightsLight = false;
+                    self.lightsOff();
+                } else {
+                    self.lightsLight = true;
+                    self.lightsOn();
+                }
+            };
+        });
+
+    </script>
+
+    <style type="text/css">
+        * {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none; /* Disable selection/copy in UIWebView */
+        }
+    </style>
+</head>
+<body>
+<div class="container" ng-controller="CarController as carCtl">
+    <h1>RC Car v1.2</h1>
+
+    <div class="control-group">
+
+        <div>
+            <button ng-touchstart="carCtl.forward(); $event.stopPropagation();"
+                    ng-touchend="carCtl.halt(); $event.stopPropagation();"
+                    class="btn btn-primary btn-block">
+                forward
+            </button>
+        </div>
+        <div>
+            <button ng-touchstart="carCtl.backward(); $event.stopPropagation();"
+                    ng-touchend="carCtl.halt(); $event.stopPropagation();"
+                    class="btn btn-default btn-block">
+                backward
+            </button>
+        </div>
+        <div class="btn-group btn-group-justified">
+            <a href=#
+               ng-touchstart="carCtl.turnLeft(); $event.stopPropagation();"
+               ng-touchend="carCtl.halt(); $event.stopPropagation();"
+               class="btn btn-default">
+                left
+            </a>
+            <a href=#
+               ng-touchstart="carCtl.turnRight(); $event.stopPropagation();"
+               ng-touchend="carCtl.halt(); $event.stopPropagation();"
+               class="btn btn-default">
+                right
+            </a>
+        </div>
+
+    </div>
+
+    <div class="control-group">
+        <button ng-click="carCtl.switchLights()" class="btn btn-primary btn-block">
+            switch lights
+        </button>
+    </div>
+
+    <div>
+        <img src="{{carCtl.videourl}}" class="img-responsive" />
+    </div>
+
+    <div>
+        count: {{carCtl.count}}
+        error: {{carCtl.isError}} {{carCtl.error}}
+    </div>
+
+    <div>
+        local status: {{carCtl.local_status}}<br />
+        remote status: {{carCtl.remote_status}}
+    </div>
+</div>
+</body>
+</html>
