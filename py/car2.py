@@ -267,6 +267,25 @@ def move_backward():
     dc_motor_set(4, -100)
 
 
+def move(thrust, vector):
+
+
+    if (vector == 0):
+        thrustl = thrust
+        thrustr = thrust
+    elif (vector < 0):
+        thrustr = thrust
+        thrustl = thrust * (1+vector)
+    elif (vector > 0):
+        thrustl = thrust
+        thrustr = thrust * (1-vector)
+
+    dc_motor_set(1, thrustr)
+    dc_motor_set(2, thrustr)
+    dc_motor_set(3, thrustl)
+    dc_motor_set(4, thrustl)
+
+
 def release():
     dc_motor_set(1, 0)
     dc_motor_set(2, 0)
@@ -327,7 +346,7 @@ class CarMoveBackward:
 
 class CarMove:
     def on_get(self, req, resp, thrust, vector):
-        move_backward()
+        move(thrust, vector)
         origin = req.get_header('Origin')
         resp.set_header('Access-Control-Allow-Origin', origin)
         resp.body = json.dumps({
