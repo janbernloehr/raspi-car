@@ -4,7 +4,7 @@ Install debian dependencies
 
 Install python dependencies
 
-    sudo pip3 install falcon wiringpi2
+    sudo pip3 install gunicorn falcon wiringpi2
 
 Install npm dependencies
 
