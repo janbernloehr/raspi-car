@@ -1,22 +1,22 @@
 Install debian dependencies
-`sudo apt-get install git supervisor python3 python3-pip nginx libjpeg-dev`
+
+    sudo apt-get install git supervisor python3 python3-pip nginx libjpeg-dev
 
 Install python dependencies
-`sudo pip3 install falcon`
+
+    sudo pip3 install falcon
 
 Install npm dependencies
-`
-curl -sL https://deb.nodesource.com/setup_6.x | sudo bash -
-sudo apt-get install nodejs
-npm install bower -g
 
-cd web
-bower install ngtouch --save
-`
+    curl -sL https://deb.nodesource.com/setup_6.x | sudo bash -
+    sudo apt-get install nodejs
+    npm install bower -g
+    
+    cd web
+    bower install ngtouch --save
 
 Create symlinks
-`
-$PR = /home/pi/raspi-car
-ln -s $PR/conf/supervisor/carweb.conf /etc/supervisor/conf.d/carweb.conf
-ln -s $PR/conf/supervisor/livestream.conf /etc/supervisor/conf.d/livestream.conf
-`
+
+    $PR = /home/pi/raspi-car
+    ln -s $PR/conf/supervisor/carweb.conf /etc/supervisor/conf.d/carweb.conf
+    ln -s $PR/conf/supervisor/livestream.conf /etc/supervisor/conf.d/livestream.conf
