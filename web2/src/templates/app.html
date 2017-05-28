@@ -1,12 +1,12 @@
 <h1>RC Car v2.0</h1>
 
-<div style="width: 300px; height: 100px; background: grey;" 
+<div style="width: 300px; height: 100px; background: darkgreen;" 
 (panStart)="onPanStartForward($event)" 
 (panMove)="onPanMoveForward($event)"
     (panEnd)="onPanStopForward($event)">
 </div>
 
-<div style="width: 300px; height: 100px; background: grey;" 
+<div style="width: 300px; height: 100px; background: darkred;" 
 (panStart)="onPanStartBackwards($event)" (panMove)="onPanMoveBackwards($event)"
     (panEnd)="onPanStopBackwards($event)">
 </div>
@@ -19,6 +19,10 @@
 
 <div>
     <img src="{{videourl}}" class="img-responsive" />
+</div>
+
+<div>
+    {{thrust}} {{angle}}
 </div>
 
 <div>
