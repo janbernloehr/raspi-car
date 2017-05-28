@@ -130,9 +130,9 @@ def dc_motor_run(motornum, cmd):
         latch_tx()
 
 
-def dc_motor_set(motor_num, speed):
-    speed = int(speed)
-    
+def dc_motor_set(motor_num, speedf):
+    speed = int(speedf)
+
     if speed == 0:
         dc_motor_run(motor_num, RELEASE)
     else:
