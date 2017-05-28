@@ -2,7 +2,7 @@ import json
 from time import sleep
 
 import falcon
-import wiringpi2 as wiringpi
+import wiringpi as wiringpi
 
 def _BV(bit):
     return 1 << (bit)
