@@ -272,15 +272,12 @@ def move_backward():
 
 
 def move(thrust, angle):
-    if (angle == 0):
-        thrustl = thrust
-        thrustr = thrust
-    elif (angle < 0):
+    if (angle <= 0):
         thrustr = thrust
         thrustl = thrust * math.cos(angle)
     elif (angle > 0):
         thrustl = thrust
-        thrustl = thrust * math.cos(angle)
+        thrustr = thrust * math.cos(angle)
 
     dc_motor_set(1, 100*thrustr)
     dc_motor_set(2, 100*thrustr)
