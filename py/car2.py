@@ -4,6 +4,8 @@ from time import sleep
 import falcon
 import wiringpi as wiringpi
 
+import math
+
 def _BV(bit):
     return 1 << (bit)
 
