@@ -267,21 +267,21 @@ def move_backward():
     dc_motor_set(4, -100)
 
 
-def move(thrust, vector):
-    if (vector == 0):
+def move(thrust, angle):
+    if (angle == 0):
         thrustl = thrust
         thrustr = thrust
-    elif (vector < 0):
+    elif (angle < 0):
         thrustr = thrust
         thrustl = int(float(thrust) * (1.0+vector))
-    elif (vector > 0):
+    elif (angle > 0):
         thrustl = thrust
         thrustr = int(float(thrust) * (1.0-vector))
 
-    dc_motor_set(1, thrustr)
-    dc_motor_set(2, thrustr)
-    dc_motor_set(3, thrustl)
-    dc_motor_set(4, thrustl)
+    dc_motor_set(1, 100*thrustr)
+    dc_motor_set(2, 100*thrustr)
+    dc_motor_set(3, 100*thrustl)
+    dc_motor_set(4, 100*thrustl)
 
 
 def release():
@@ -400,7 +400,7 @@ start_this_app()
 app = falcon.API()
 
 app.add_route('/car/fw', CarMoveForward())
-app.add_route('/car/f9/{thrust}/{vector}', CarMove())
+app.add_route('/car/f9/{thrust}/{angle}', CarMove())
 app.add_route('/car/tl', CarTurnLeft())
 app.add_route('/car/tr', CarTurnRight())
 app.add_route('/car/bw', CarMoveBackward())
