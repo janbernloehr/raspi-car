@@ -36,6 +36,7 @@ export class AppComponent {
     this.baseurl = "http://" + this.hostname + ":8087/car/";
     this.videourl = "http://" + this.hostname + ":8071/?action=stream";
 
+    console.log("Running @ this.hostname");
   }
 
   onPanStart(pan: any) {
