@@ -9,12 +9,12 @@ export class AppComponent {
 
   name = 'Angular';
 
-  scaledx : number = 0;
-  scaledy : number = 0;
-  thrust : number = 0;
-  angle : number = 0;
+  scaledx: number = 0;
+  scaledy: number = 0;
+  thrust: number = 0;
+  angle: number = 0;
 
-  count : number = 0;
+  count: number = 0;
   local_status = "initialized";
   remote_status = "none";
   error = "";
@@ -43,17 +43,17 @@ export class AppComponent {
   }
 
   halt() {
-                this.local_status = "stop";
-                this.http.get(this.baseurl+"st")
-                        .subscribe(data => {
-                            this.remote_status = data.status;
-                            this.isError = false;
-                        }, error => {
-                            this.error = response;
-                            this.isError = true;
-                        });
-                this.count = this.count - 1;
-            };
+    this.local_status = "stop";
+    this.http.get(this.baseurl + "st")
+      .subscribe(data => {
+        this.remote_status = ""+ data.status;
+        this.isError = false;
+      }, error => {
+        this.error = error;
+        this.isError = true;
+      });
+    this.count = this.count - 1;
+  };
 
   onPanMove(pan: any) {
     let x = pan.center.x;
@@ -69,7 +69,7 @@ export class AppComponent {
     this.angle = Math.atan2(this.scaledx, this.scaledy);
 
     console.log("panmove ${this.thrust} ${this.angle}");
-    
+
     this.move(this.thrust, this.angle);
   }
 
