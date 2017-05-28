@@ -9,14 +9,12 @@ export class AppComponent {
 
   name = 'Angular';
 
-  x = 0;
-  y = 0;
-  scaledx = 0;
-  scaledy = 0;
-  thrust = 0;
-  angle = 0;
+  scaledx : number = 0;
+  scaledy : number = 0;
+  thrust : number = 0;
+  angle : number = 0;
 
-  count = 0;
+  count : number = 0;
   local_status = "initialized";
   remote_status = "none";
   error = "";
@@ -37,21 +35,42 @@ export class AppComponent {
 
   onPanStart(pan: any) {
     console.log('panstart');
-    console.log(pan);
   }
 
-  onPanMove(pan: any) {
-    console.log(pan);
-    this.x = pan.center.x;
-    this.y = pan.center.y;
+  onPanStop(touch: any) {
+    console.log('panstop');
+    this.halt();
+  }
 
+  halt() {
+                this.local_status = "stop";
+                this.http.get(this.baseurl+"st")
+                        .subscribe(data => {
+                            this.remote_status = data.status;
+                            this.isError = false;
+                        }, error => {
+                            this.error = response;
+                            this.isError = true;
+                        });
+                this.count = this.count - 1;
+            };
+
+  onPanMove(pan: any) {
+    let x = pan.center.x;
+    let y = pan.center.y;
+
+    // map the center of the pan action to the interval [-1,1]x[-1,1]
     this.scaledx = -1 + 2 * (pan.center.x - pan.target.offsetLeft) / pan.target.offsetWidth;
     this.scaledy = 1 - 2 * (pan.center.y - pan.target.offsetTop) / pan.target.offsetHeight;
 
-    var len = Math.sqrt(this.scaledx * this.scaledx + this.scaledy * this.scaledy);
+    let length = Math.sqrt(this.scaledx * this.scaledx + this.scaledy * this.scaledy);
 
-    this.thrust = Math.min(1, len);
+    this.thrust = Math.min(1, length);
     this.angle = Math.atan2(this.scaledx, this.scaledy);
+
+    console.log("panmove ${this.thrust} ${this.angle}");
+    
+    this.move(this.thrust, this.angle);
   }
 
   move(thrust: number, angle: number) {
