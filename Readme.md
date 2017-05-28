@@ -11,7 +11,8 @@ A remote controlled car powered by the raspberry pi.
 - 16 GB SD Card
 - Anker PowerCore 13000mAh
 - 400 Pin Breadboard
-- Logitech Webcam
+- Logitech Webcam (optional)
+- LM2577 DC converter (optional)
 
 ## Configuration
 
