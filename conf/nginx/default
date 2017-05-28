@@ -13,4 +13,13 @@ server {
     alias /home/pi/raspi-car/web/;
     index index.html;
 }
+  location /car2/ {
+    alias /home/pi/raspi-car/web2/src/;
+
+    expires -1;
+    add_header Pragma "no-cache";
+    add_header Cache-Control "no-store, no-cache, must-revalidate, post-check=0, pre-check=0";
+
+    index index.html;
+}
 }
