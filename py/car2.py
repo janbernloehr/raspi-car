@@ -273,10 +273,10 @@ def move(thrust, angle):
         thrustr = thrust
     elif (angle < 0):
         thrustr = thrust
-        thrustl = int(float(thrust) * (1.0+vector))
+        thrustl = thrust * math.cos(angle)
     elif (angle > 0):
         thrustl = thrust
-        thrustr = int(float(thrust) * (1.0-vector))
+        thrustl = thrust * math.cos(angle)
 
     dc_motor_set(1, 100*thrustr)
     dc_motor_set(2, 100*thrustr)
@@ -344,7 +344,7 @@ class CarMoveBackward:
 
 class CarMove:
     def on_get(self, req, resp, thrust, vector):
-        move(int(thrust), float(vector))
+        move(float(thrust), float(vector))
         origin = req.get_header('Origin')
         resp.set_header('Access-Control-Allow-Origin', origin)
         resp.body = json.dumps({
