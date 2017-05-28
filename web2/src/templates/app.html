@@ -1,16 +1,27 @@
 <h1>RC Car v2.0</h1>
 
-<div style="width: 300px; height: 100px; background: darkgreen;" 
-(panStart)="onPanStartForward($event)" 
-(panMove)="onPanMoveForward($event)"
-    (panEnd)="onPanStopForward($event)">
-</div>
+<div class="control-group">
 
-<div style="width: 300px; height: 100px; background: darkred;" 
-(panStart)="onPanStartBackwards($event)" (panMove)="onPanMoveBackwards($event)"
-    (panEnd)="onPanStopBackwards($event)">
-</div>
+    <div>
+        <button (press)="forward()" (pressUp)="halt()" class="btn btn-primary btn-block">
+                forward
+            </button>
+    </div>
+    <div>
+        <button (press)="backward()" (pressUp)="halt()" class="btn btn-default btn-block">
+                backward
+            </button>
+    </div>
+    <div class="btn-group btn-group-justified">
+        <a (press)="turnLeft()" (pressUp)="halt()" class="btn btn-default">
+                left
+            </a>
+        <a (press)="turnRight()" (pressUp)="halt()" class="btn btn-default">
+                right
+            </a>
+    </div>
 
+</div>
 <div class="control-group">
     <button (tap)="switchLights()" class="btn btn-primary btn-block">
             switch lights
@@ -31,4 +42,14 @@
 
 <div>
     local status: {{local_status}}<br /> remote status: {{remote_status}}
+</div>
+
+
+
+<div style="width: 300px; height: 100px; background: darkgreen;" (panStart)="onPanStartForward($event)" (panMove)="onPanMoveForward($event)"
+    (panEnd)="onPanStopForward($event)">
+</div>
+
+<div style="width: 300px; height: 100px; background: darkred;" (panStart)="onPanStartBackwards($event)" (panMove)="onPanMoveBackwards($event)"
+    (panEnd)="onPanStopBackwards($event)">
 </div>

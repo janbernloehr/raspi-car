@@ -57,16 +57,39 @@ export class AppComponent {
     this.halt();
   }
 
-  halt() {
-    this.local_status = "stop";
-    this.http.get(this.baseurl + "st")
+  falconAction(actionUrl: string, localAction: string, haltOnError: boolean) {
+    this.http.get(this.baseurl + actionUrl)
       .subscribe(data => {
         this.remote_status = data.json().status;
         this.isError = false;
+
+        if (this.local_status != this.remote_status) {
+          this.halt();
+        }
       }, error => {
         this.error = error;
         this.isError = true;
       });
+  }
+
+  forward() {
+    this.falconAction("fw", "forward", true);
+  }
+
+  backward() {
+    this.falconAction("bw", "backward", true);
+  }
+
+  turnLeft() {
+    this.falconAction("tl", "left", true);
+  }
+
+  turnRight() {
+    this.falconAction("tr", "right", true);
+  }
+
+  halt() {
+    this.falconAction("st", "stop", false);
   };
 
   onPanMoveForward(pan: any) {
