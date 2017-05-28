@@ -1,3 +1,5 @@
+# Installation
+
 Install debian dependencies
 
     sudo apt-get install git supervisor python3 python3-pip nginx libjpeg-dev
@@ -5,6 +7,8 @@ Install debian dependencies
 Install python dependencies
 
     sudo pip3 install gunicorn falcon wiringpi
+
+To use wiringpi on kernel 4.9 one needs to apply a patch - see [here](https://github.com/WiringPi/WiringPi-Python/issues/47)
 
 Install npm dependencies
 
