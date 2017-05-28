@@ -39,11 +39,20 @@ export class AppComponent {
     console.log("Running @ this.hostname");
   }
 
-  onPanStart(pan: any) {
+  onPanStartForward(pan: any) {
     console.log('panstart');
   }
 
-  onPanStop(touch: any) {
+  onPanStopForward(touch: any) {
+    console.log('panstop');
+    this.halt();
+  }
+
+  onPanStartBackwards(pan: any) {
+    console.log('panstart');
+  }
+
+  onPanStopBackwards(touch: any) {
     console.log('panstop');
     this.halt();
   }
@@ -61,7 +70,7 @@ export class AppComponent {
     this.count = this.count - 1;
   };
 
-  onPanMove(pan: any) {
+  onPanMoveForward(pan: any) {
     let x = pan.center.x;
     let y = pan.center.y;
 
@@ -69,12 +78,30 @@ export class AppComponent {
     this.scaledx = -1 + 2 * (pan.center.x - pan.target.offsetLeft) / pan.target.offsetWidth;
     this.scaledy = 1 - 2 * (pan.center.y - pan.target.offsetTop) / pan.target.offsetHeight;
 
-    let length = Math.sqrt(this.scaledx * this.scaledx + this.scaledy * this.scaledy);
+    //let length = Math.sqrt(this.scaledx * this.scaledx + this.scaledy * this.scaledy);
 
-    this.thrust = Math.min(1, length);
-    this.angle = Math.atan2(this.scaledx, this.scaledy);
+    this.thrust = 1; //Math.min(1, length);
+    this.angle = Math.PI * this.scaledy; // Math.atan2(this.scaledx, this.scaledy);
 
-    console.log("panmove ${this.thrust} ${this.angle}");
+    console.log(`panmove ${this.thrust} ${this.angle}`);
+
+    this.move(this.thrust, this.angle);
+  }
+
+  onPanMoveBackwards(pan: any) {
+    let x = pan.center.x;
+    let y = pan.center.y;
+
+    // map the center of the pan action to the interval [-1,1]x[-1,1]
+    this.scaledx = -1 + 2 * (pan.center.x - pan.target.offsetLeft) / pan.target.offsetWidth;
+    this.scaledy = 1 - 2 * (pan.center.y - pan.target.offsetTop) / pan.target.offsetHeight;
+
+    //let length = Math.sqrt(this.scaledx * this.scaledx + this.scaledy * this.scaledy);
+
+    this.thrust = -1; //Math.min(1, length);
+    this.angle = Math.PI * this.scaledy; // Math.atan2(this.scaledx, this.scaledy);
+
+    console.log(`panmove ${this.thrust} ${this.angle}`);
 
     this.move(this.thrust, this.angle);
   }
