@@ -4,6 +4,20 @@ A remote controlled car powered by the raspberry pi.
 
 ![the car](car.JPG)
 
+## Hardware
+- Car Chassis 4WD (including 4 DC motors)
+- L293D Motor Drive Shield
+- Raspberry Pi 3
+- 16 GB SD Card
+- Anker PowerCore 13000mAh
+- 400 Pin Breadboard
+- Logitech Webcam
+
+## Configuration
+
+- The python based backend runs a REST service which exposes movement functionality
+- The Angular based frontend allows to control the car and displays a streaming video from the front camera
+
 ## Installation
 
 Install debian dependencies
