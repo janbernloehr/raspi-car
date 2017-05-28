@@ -1,4 +1,10 @@
-# Installation
+# raspi-car
+
+A remote controlled car powered by the raspberry pi.
+
+![the car](car.JPG)
+
+## Installation
 
 Install debian dependencies
 
