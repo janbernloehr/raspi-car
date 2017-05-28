@@ -61,13 +61,12 @@ export class AppComponent {
     this.local_status = "stop";
     this.http.get(this.baseurl + "st")
       .subscribe(data => {
-        this.remote_status = "" + data.status;
+        this.remote_status = data.json().status;
         this.isError = false;
       }, error => {
         this.error = error;
         this.isError = true;
       });
-    this.count = this.count - 1;
   };
 
   onPanMoveForward(pan: any) {
@@ -109,7 +108,7 @@ export class AppComponent {
   move(thrust: number, angle: number) {
     this.http.get(this.baseurl + "f9/" + thrust + "/" + angle)
       .subscribe(data => {
-        this.error = data.json();
+        this.remote_status = data.json().status;
         this.isError = false;
       }, error => {
         this.error = error;
