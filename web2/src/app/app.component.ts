@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Http, Response } from '@angular/http';
+import { DOCUMENT } from '@angular/platform-browser';
 
 @Component({
   selector: 'my-app',
@@ -22,15 +23,19 @@ export class AppComponent {
   isError = false;
   lightsLight = false;
 
-  hostname = "192.168.178.50";
-
-  baseurl = "http://" + this.hostname + ":8087/car/";
-  videourl = "http://" + this.hostname + ":8071/?action=stream";
+  hostname = "";
+  baseurl = "";
+  videourl = "";
 
   http: Http;
 
-  constructor(http: Http) {
+  constructor(http: Http, @Inject(DOCUMENT) private document: any) {
     this.http = http;
+    this.hostname = document.location.hostname;
+
+    this.baseurl = "http://" + this.hostname + ":8087/car/";
+    this.videourl = "http://" + this.hostname + ":8071/?action=stream";
+
   }
 
   onPanStart(pan: any) {
@@ -46,7 +51,7 @@ export class AppComponent {
     this.local_status = "stop";
     this.http.get(this.baseurl + "st")
       .subscribe(data => {
-        this.remote_status = ""+ data.status;
+        this.remote_status = "" + data.status;
         this.isError = false;
       }, error => {
         this.error = error;
