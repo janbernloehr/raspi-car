@@ -343,14 +343,14 @@ class CarMoveBackward:
         resp.status = falcon.HTTP_200
 
 class CarMove:
-    def on_get(self, req, resp, thrust, vector):
-        move(float(thrust), float(vector))
+    def on_get(self, req, resp, thrust, angle):
+        move(float(thrust), float(angle))
         origin = req.get_header('Origin')
         resp.set_header('Access-Control-Allow-Origin', origin)
         resp.body = json.dumps({
             'status': 'move',
             'thrust': thrust,
-            'vector': vector
+            'angle': angle
         })
         resp.status = falcon.HTTP_200
 
