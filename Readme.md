@@ -19,5 +19,5 @@ Create symlinks
 
     $PR = /home/pi/raspi-car
     ln -sf $PR/conf/nginx/default /etc/nginx/sites-enabled/default
-    ln -s $PR/conf/supervisor/carweb.conf /etc/supervisor/conf.d/carweb.conf
-    ln -s $PR/conf/supervisor/livestream.conf /etc/supervisor/conf.d/livestream.conf
+    ln -s $PR/conf/systemd/carweb.service /etc/systemd/system/carweb.service
+    ln -s $PR/conf/systemd/livestream.service /etc/systemd/system/livestream.service
