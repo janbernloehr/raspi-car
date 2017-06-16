@@ -1,0 +1,10 @@
+[Unit]
+Description=WebCam mjpg livestream
+
+[Service]
+Type=simple
+ExecStart=/home/pi/raspi-car/conf/livestream.sh
+WorkingDirectory=/home/pi/raspi-car/mjpg-streamer/
+
+[Install]
+WantedBy=multi-user.target

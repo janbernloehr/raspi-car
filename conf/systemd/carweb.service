@@ -1,0 +1,10 @@
+[Unit]
+Description=RaspiCar Web Backend
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/gunicorn -b '0.0.0.0:8087' car2:app
+WorkingDirectory=/home/pi/raspi-car/py
+
+[Install]
+WantedBy=multi-user.target
